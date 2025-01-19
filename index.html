@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haripriya Krishnan</title>
+    <title>Kavin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Aktiv+Grotesk&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -15,7 +15,81 @@
             margin: 0;
         }
         .content {
-            min-height: calc(100vh - 8rem); /* Adjust based on header and footer height */
+            min-height: calc(100vh - 8rem);
+        }
+        .pdf-container {
+            display: none;
+            width: 100%;
+            height: 80vh;
+            margin-top: 1rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            overflow: hidden;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .close-preview {
+            display: none;
+            margin-top: 1rem;
+            color: red;
+            cursor: pointer;
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .nav-links a {
+                padding: 10px;
+                text-align: center;
+                border-top: 1px solid #fff;
+            }
         }
     </style>
 </head>
@@ -24,20 +98,35 @@
         <div class="loader"></div>
     </div>
     <div id="header"></div>
-    <nav class="bg-[#2d2d2a] text-white p-2"> <!-- Changed color to #2d2d2a -->
-        <a href="about.html" class="mr-4 text-white">About</a>
-        <a href="case-studies.html" class="mr-4 text-white">Case Studies</a>
-        <a href="contact.html" class="text-white">Contact</a>
+    <nav class="bg-[#2d2d2a] text-white p-2 flex justify-between items-center">
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="mr-4 text-white" id="caseStudiesLink">Case Studies</a>
+        </div>
     </nav>
+    <div class="banner"></div>
     <main class="p-4 content" style="padding-top: 8rem; padding-bottom: 4rem;">
-        <!-- ...existing code... -->
-        <section class="flex flex-col md:flex-row items-center md:items-center justify-between">
-            <img src="assets/images/haripa.jfif" alt="Haripriya Krishnan" class="w-64 h-64 md:w-80 md:h-80 rounded-full mb-4 md:mb-0 md:mr-8"> <!-- Increased margin -->
+        <section class="flex flex-col items-start">
             <p class="text-lg md:text-xl text-left font-bold">
-                👋 I’m Haripriya Krishnan, a <span class="underline">Product Manager</span> obsessed with design, user experience, and growth.
+                👋 I’m Kavin, a <span class="underline">Product Manager</span> obsessed with design, user experience, and growth.
+            </p>
+            <p class="text-lg md:text-xl text-left mt-4">
+                📞 Contact: +91 6374619821 | 💼 LinkedIn: <a href="https://www.linkedin.com/in/Haripriya-r" class="text-blue-400">LinkedIn/Haripriya-r</a>
             </p>
         </section>
-        <!-- ...existing code... -->
+        <section id="case-studies" style="display: none;">
+            <h2 class="text-2xl font-bold">Case Studies</h2>
+            <h3 class="text-xl font-semibold">Short, Skill-Based Courses Platform</h3>
+            <a href="#" id="viewPdf" class="text-blue-400">View Case Study</a>
+            <div id="pdfContainer" class="pdf-container">
+                <iframe src="assets/case-study1.pdf#toolbar=0&navpanes=0&scrollbar=0"></iframe>
+                <p id="closePreview" class="close-preview">Close Preview</p>
+            </div>
+        </section>
     </main>
     <div id="footer"></div>
     <script>
@@ -50,9 +139,37 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('footer').innerHTML = data;
-                    // Removed creator's information
                 })
                 .catch(error => console.error('Error fetching footer:', error));
+
+            var btn = document.getElementById("viewPdf");
+            var pdfContainer = document.getElementById("pdfContainer");
+            var closeBtn = document.getElementById("closePreview");
+
+            btn.onclick = function(event) {
+                event.preventDefault();
+                pdfContainer.style.display = "block";
+                closeBtn.style.display = "block";
+            }
+
+            closeBtn.onclick = function(event) {
+                event.preventDefault();
+                pdfContainer.style.display = "none";
+                closeBtn.style.display = "none";
+            }
+
+            var caseStudiesLink = document.getElementById("caseStudiesLink");
+            var caseStudiesSection = document.getElementById("case-studies");
+            caseStudiesLink.onclick = function(event) {
+                event.preventDefault();
+                caseStudiesSection.style.display = caseStudiesSection.style.display === "none" ? "block" : "none";
+            }
+
+            var hamburger = document.getElementById("hamburger");
+            var navLinks = document.querySelector(".nav-links");
+            hamburger.onclick = function() {
+                navLinks.style.display = navLinks.style.display === "flex" ? "none" : "flex";
+            }
         });
     </script>
     <script src="script.js" defer></script>
