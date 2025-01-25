@@ -151,12 +151,13 @@
             <div></div>
         </div>
         <div class="nav-links">
-            <a href="#" id="caseStudiesLinkNav">Case Studies</a>
+            <!-- Removed Case Studies link from here -->
         </div>
     </nav>
     <div id="leftPanel" class="left-panel">
         <a href="javascript:void(0)" class="close-btn" id="closePanel">&times;</a>
         <a href="#" id="caseStudiesLink">Short, Skill-Based Courses Platform</a>
+        <a href="#" id="caseStudiesLinkNav">Case Studies</a> <!-- Added Case Studies link here -->
     </div>
     <div class="banner"></div>
     <main class="p-4 content" style="padding-top: 8rem; padding-bottom: 4rem;">
@@ -220,6 +221,7 @@
             caseStudiesLinkNav.onclick = function(event) {
                 event.preventDefault();
                 caseStudiesSection.style.display = caseStudiesSection.style.display === "none" ? "block" : "none";
+                leftPanel.style.display = "none"; // Close the left panel after clicking
             }
 
             var hamburger = document.getElementById("hamburger");
