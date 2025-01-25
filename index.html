@@ -151,7 +151,7 @@
             <div></div>
         </div>
         <div class="nav-links">
-            <!-- Removed Case Studies link -->
+            <a href="#" id="caseStudiesLinkNav">Case Studies</a>
         </div>
     </nav>
     <div id="leftPanel" class="left-panel">
@@ -214,6 +214,12 @@
                 event.preventDefault();
                 caseStudiesSection.style.display = caseStudiesSection.style.display === "none" ? "block" : "none";
                 leftPanel.style.display = "none";
+            }
+
+            var caseStudiesLinkNav = document.getElementById("caseStudiesLinkNav");
+            caseStudiesLinkNav.onclick = function(event) {
+                event.preventDefault();
+                caseStudiesSection.style.display = caseStudiesSection.style.display === "none" ? "block" : "none";
             }
 
             var hamburger = document.getElementById("hamburger");
