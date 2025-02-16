@@ -53,7 +53,7 @@
         .pdf-container {
             width: 80%; /* Adjusted width */
             height: 80vh; /* Adjusted height */
-            overflow: hidden;
+            overflow: auto; /* Allow scrolling */
             display: none;
             position: relative;
             margin: 0 auto; /* Center the container */
@@ -200,7 +200,6 @@
                 setTimeout(() => popup.style.display = 'none', 3000);
                 viewPdf.textContent = 'View Case Study';
             };
-
 
             function loadPDF(url) {
                 const loadingTask = pdfjsLib.getDocument(url);
