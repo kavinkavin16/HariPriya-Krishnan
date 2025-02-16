@@ -41,44 +41,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        .left-panel {
-            width: 300px;
-            position: fixed;
-            left: -300px;
-            top: 0;
-            height: 100%;
-            background-color: #343a40;
-            color: white;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            z-index: 1050;
-        }
-
-        .left-panel.open {
-            left: 0;
-        }
-
-        .left-panel a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .left-panel a:hover {
-            background-color: #495057;
-        }
-
-        .left-panel .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 36px;
-            cursor: pointer;
-        }
-
         .pdf-container {
             width: 80%; /* Adjusted width */
             height: 80vh; /* Adjusted height */
@@ -135,15 +97,9 @@
         <div class="loader"></div>
     </div>
 
-    <div id="leftPanel" class="left-panel">
-        <span class="close-btn" onclick="closePanel()">&times;</span>
-        <a href="#" id="caseStudiesLink">Case Studies</a>
-        <a href="mailto:haripriyakrishnan02@gmail.com">📧 Email</a>
-        <a href="https://www.linkedin.com/in/haripriya-r578" target="_blank">💼 LinkedIn</a>
-    </div>
+    <!-- Removed leftPanel and menu button -->
 
     <nav class="bg-dark text-white py-2 px-3 d-flex align-items-center justify-content-between">
-        <button class="btn btn-light btn-sm" onclick="openPanel()">☰ Menu</button>
         <div class="d-flex align-items-center">
             <a href="mailto:haripriyakrishnan02@gmail.com" class="text-white me-3">📧 haripriyakrishnan02@gmail.com</a>
             <a href="https://www.linkedin.com/in/haripriya-r578" target="_blank" class="text-white">💼 LinkedIn</a>
@@ -156,7 +112,7 @@
             <p class="tagline">a passionate Product Manager obsessed with design, user experience, and growth.</p>
         </section>
 
-        <section id="case-studies" style="display: none; margin-top: 20px;">
+        <section id="case-studies" style="margin-top: 20px;"> <!-- Removed display: none; -->
             <h2>Case Studies</h2>
             <h3>Short, Skill-Based Courses Platform</h3>
             <button id="viewPdf" class="btn btn-primary">View Case Study</button>
@@ -176,14 +132,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('loader').style.display = 'none';
-            const caseStudiesLink = document.getElementById('caseStudiesLink');
-            const caseStudiesSection = document.getElementById('case-studies');
             const viewPdf = document.getElementById('viewPdf');
             const pdfContainer = document.getElementById('pdfContainer');
             const closePreview = document.getElementById('closePreview');
             const popup = document.getElementById('popup');
 
-            caseStudiesLink.onclick = () => caseStudiesSection.style.display = 'block';
             viewPdf.onclick = function () {
                 if (pdfContainer.style.display === 'block') {
                     pdfContainer.style.display = 'none';
@@ -200,9 +153,6 @@
                 viewPdf.textContent = 'View Case Study';
             };
         });
-
-        function openPanel() { document.getElementById('leftPanel').classList.add('open'); }
-        function closePanel() { document.getElementById('leftPanel').classList.remove('open'); }
     </script>
 </body>
 </html>
