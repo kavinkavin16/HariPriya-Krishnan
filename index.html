@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"> <!-- Updated font -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="assets/images/Capture.PNG" type="image/png"> <!-- Added favicon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script> <!-- Added PDF.js worker -->
     <style>
         body {
             font-family: 'Playfair Display', serif; /* Updated font */
@@ -57,10 +59,9 @@
             margin: 0 auto; /* Center the container */
         }
 
-        .pdf-container iframe {
+        .pdf-container canvas {
             width: 100%;
-            height: 100%;
-            border: none;
+            height: auto; /* Adjust height to maintain aspect ratio */
         }
 
         .close-preview {
@@ -154,7 +155,7 @@
                     <h3>Short, Skill-Based Courses Platform</h3>
                     <button id="viewPdf" class="btn btn-primary">View Case Study</button>
                     <div id="pdfContainer" class="pdf-container">
-                        <iframe src="assets/case-study1.pdf#toolbar=0&navpanes=0&scrollbar=0"></iframe>
+                        <canvas id="pdfViewer"></canvas>
                         <button id="closePreview" class="close-preview">X Close Preview</button>
                     </div>
                 </li>
@@ -178,6 +179,9 @@
             const pdfContainer = document.getElementById('pdfContainer');
             const closePreview = document.getElementById('closePreview');
             const popup = document.getElementById('popup');
+            const pdfViewer = document.getElementById('pdfViewer');
+
+            const url = 'assets/case-study1.pdf';
 
             viewPdf.onclick = function () {
                 if (pdfContainer.style.display === 'block') {
@@ -186,14 +190,36 @@
                 } else {
                     pdfContainer.style.display = 'block';
                     viewPdf.textContent = 'Close Case Study';
+                    loadPDF(url);
                 }
             };
+
             closePreview.onclick = function () {
                 pdfContainer.style.display = 'none';
                 popup.style.display = 'block';
                 setTimeout(() => popup.style.display = 'none', 3000);
                 viewPdf.textContent = 'View Case Study';
             };
+
+
+            function loadPDF(url) {
+                const loadingTask = pdfjsLib.getDocument(url);
+                loadingTask.promise.then(function(pdf) {
+                    pdf.getPage(1).then(function(page) {
+                        const viewport = page.getViewport({ scale: 1.5 });
+                        const canvas = pdfViewer;
+                        const context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        const renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+                        page.render(renderContext);
+                    });
+                });
+            }
         });
     </script>
 </body>
