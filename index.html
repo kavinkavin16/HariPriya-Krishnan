@@ -60,6 +60,14 @@
             padding: 10px;
         }
 
+        #pdfLoader {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            margin: 10px;
+            color: #6c757d;
+        }
+
         canvas {
             display: block;
             margin: auto;
@@ -74,19 +82,6 @@
             color: #fff;
             border: none;
             cursor: pointer;
-        }
-
-        #popup {
-            display: none;
-            position: fixed;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #343a40;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            z-index: 1050;
         }
 
         footer {
@@ -114,10 +109,6 @@
             margin-left: 1rem;
         }
 
-        .top-bar a:hover {
-            text-decoration: underline;
-        }
-
         .case-studies-list {
             text-align: left;
             list-style-type: disc;
@@ -125,10 +116,6 @@
         }
         .case-studies-list li {
             margin-bottom: 10px;
-        }
-
-        .download-btn {
-            margin-left: 10px;
         }
     </style>
 </head>
@@ -156,15 +143,13 @@
                 <li>
                     <h3>Short, Skill-Based Courses Platform</h3>
                     <button id="viewPdf" class="btn btn-primary">View Case Study</button>
-                    <a href="assets/case-study1.pdf" download class="btn btn-secondary download-btn">Download PDF</a>
+                    <div id="pdfLoader">Loading PDF...</div>
                     <div id="pdfContainer" class="pdf-container"></div>
                     <button id="closePreview" class="close-preview" style="display: none;">X Close Preview</button>
                 </li>
             </ul>
         </section>
     </main>
-
-    <div id="popup">Click "View Case Study" to reopen!</div>
 
     <footer>
         <p>© 2025 | All Rights Reserved.</p>
@@ -179,7 +164,7 @@
             const viewPdf = document.getElementById('viewPdf');
             const pdfContainer = document.getElementById('pdfContainer');
             const closePreview = document.getElementById('closePreview');
-            const popup = document.getElementById('popup');
+            const pdfLoader = document.getElementById('pdfLoader');
 
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
             let pdfLoaded = false;
@@ -203,22 +188,21 @@
             closePreview.onclick = function () {
                 pdfContainer.style.display = 'none';
                 closePreview.style.display = 'none';
-                popup.style.display = 'block';
-                setTimeout(() => popup.style.display = 'none', 3000);
                 viewPdf.textContent = 'View Case Study';
             };
 
             function loadPDF(url) {
+                pdfLoader.style.display = 'block';
                 pdfjsLib.getDocument(url).promise.then(function (pdf) {
-                    pdfContainer.innerHTML = ''; // Clear previous content
+                    pdfLoader.style.display = 'none';
+                    pdfContainer.innerHTML = '';
                     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                         pdf.getPage(pageNum).then(function (page) {
                             const canvas = document.createElement('canvas');
                             pdfContainer.appendChild(canvas);
 
                             const context = canvas.getContext('2d');
-                            const scaleFactor = getScaleFactor();
-                            const viewport = page.getViewport({ scale: scaleFactor });
+                            const viewport = page.getViewport({ scale: 2 });
 
                             canvas.height = viewport.height;
                             canvas.width = viewport.width;
@@ -230,14 +214,6 @@
                     console.error("Error loading PDF:", error);
                 });
             }
-
-            function getScaleFactor() {
-                if (window.innerWidth <= 480) return 0.6;
-                else if (window.innerWidth <= 768) return 0.8;
-                return 1.2;
-            }
-
-            window.addEventListener('resize', () => location.reload());
         });
     </script>
 
