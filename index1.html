@@ -14,9 +14,9 @@
             padding: 0;
             position: relative;
             min-height: 100vh;
+            text-align: center; /* Center the body content text */
         }
 
-        /* Loader styling */
         #loader {
             position: fixed;
             inset: 0;
@@ -37,29 +37,26 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .left-panel {
+            width: 300px;
             position: fixed;
+            left: -300px;
             top: 0;
-            left: 0;
             height: 100%;
-            width: 250px;
             background-color: #343a40;
             color: white;
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(-100%);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
             z-index: 1050;
         }
 
         .left-panel.open {
-            transform: translateX(0);
+            left: 0;
         }
 
         .left-panel a {
@@ -67,7 +64,6 @@
             text-decoration: none;
             display: block;
             padding: 15px 20px;
-            font-size: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -75,37 +71,21 @@
             background-color: #495057;
         }
 
-        .left-panel .dropdown {
-            padding-left: 20px;
-            display: none;
-        }
-
-        .left-panel a:hover + .dropdown {
-            display: block;
-        }
-
         .left-panel .close-btn {
             position: absolute;
             top: 10px;
-            right: 15px;
-            font-size: 24px;
+            right: 25px;
+            font-size: 36px;
             cursor: pointer;
         }
 
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            flex: 1;
-        }
-
         .pdf-container {
+            width: 80%; /* Adjusted width */
+            height: 80vh; /* Adjusted height */
+            overflow: hidden;
             display: none;
-            width: 100%;
-            height: calc(100vh - 80px);
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             position: relative;
+            margin: 0 auto; /* Center the container */
         }
 
         .pdf-container iframe {
@@ -116,10 +96,13 @@
 
         .close-preview {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #dc3545;
-            font-weight: bold;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
             cursor: pointer;
         }
 
@@ -137,51 +120,28 @@
         }
 
         footer {
-            background-color: #343a40;
+            background-color: rgb(45, 45, 42);
             color: white;
             text-align: center;
             padding: 1rem;
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100%;
-        }
-
-        /* Tagline styling */
-        h1 {
-            font-size: 2rem;
-        }
-
-        p.tagline {
-            font-size: 1.2rem;
-            font-style: italic;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .content {
-                margin-left: 0;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Loader -->
     <div id="loader">
         <div class="loader"></div>
     </div>
 
-    <!-- Left Panel -->
     <div id="leftPanel" class="left-panel">
         <span class="close-btn" onclick="closePanel()">&times;</span>
         <a href="#" id="caseStudiesLink">Case Studies</a>
-        <div class="dropdown">
-            <a href="#" id="shortCourseLink">Short, Skill-Based Courses Platform</a>
-        </div>
         <a href="mailto:haripriyakrishnan02@gmail.com">📧 Email</a>
         <a href="https://www.linkedin.com/in/haripriya-r578" target="_blank">💼 LinkedIn</a>
     </div>
 
-    <!-- Navbar -->
     <nav class="bg-dark text-white py-2 px-3 d-flex align-items-center justify-content-between">
         <button class="btn btn-light btn-sm" onclick="openPanel()">☰ Menu</button>
         <div class="d-flex align-items-center">
@@ -190,7 +150,6 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="content">
         <section id="about">
             <h1>👋 I’m HariPriya</h1>
@@ -203,43 +162,37 @@
             <button id="viewPdf" class="btn btn-primary">View Case Study</button>
             <div id="pdfContainer" class="pdf-container">
                 <iframe src="assets/case-study1.pdf#toolbar=0&navpanes=0&scrollbar=0"></iframe>
-                <span id="closePreview" class="close-preview">X Close Preview</span>
+                <button id="closePreview" class="close-preview">X Close Preview</button>
             </div>
         </section>
     </main>
 
-    <!-- Popup -->
     <div id="popup">Click "View Case Study" to reopen!</div>
 
-    <!-- Footer -->
     <footer>
-        © 2025 HariPriya | All Rights Reserved
+        <p>© 2025 | All Rights Reserved.</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('loader').style.display = 'none';
-
             const caseStudiesLink = document.getElementById('caseStudiesLink');
             const caseStudiesSection = document.getElementById('case-studies');
-            const shortCourseLink = document.getElementById('shortCourseLink');
             const viewPdf = document.getElementById('viewPdf');
             const pdfContainer = document.getElementById('pdfContainer');
             const closePreview = document.getElementById('closePreview');
             const popup = document.getElementById('popup');
 
             caseStudiesLink.onclick = () => caseStudiesSection.style.display = 'block';
-
-            shortCourseLink.onclick = (e) => {
-                e.preventDefault();
-                caseStudiesSection.style.display = 'block';
-            };
-
             viewPdf.onclick = function () {
-                pdfContainer.style.display = 'block';
-                viewPdf.textContent = 'Close Case Study';
+                if (pdfContainer.style.display === 'block') {
+                    pdfContainer.style.display = 'none';
+                    viewPdf.textContent = 'View Case Study';
+                } else {
+                    pdfContainer.style.display = 'block';
+                    viewPdf.textContent = 'Close Case Study';
+                }
             };
-
             closePreview.onclick = function () {
                 pdfContainer.style.display = 'none';
                 popup.style.display = 'block';
@@ -248,13 +201,8 @@
             };
         });
 
-        function openPanel() {
-            document.getElementById('leftPanel').classList.add('open');
-        }
-
-        function closePanel() {
-            document.getElementById('leftPanel').classList.remove('open');
-        }
+        function openPanel() { document.getElementById('leftPanel').classList.add('open'); }
+        function closePanel() { document.getElementById('leftPanel').classList.remove('open'); }
     </script>
 </body>
 </html>
