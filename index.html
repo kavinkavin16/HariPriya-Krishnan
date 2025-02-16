@@ -110,6 +110,15 @@
         .top-bar a:hover {
             text-decoration: underline;
         }
+
+        .case-studies-list {
+            text-align: left;
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .case-studies-list li {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -129,17 +138,22 @@
     <main class="content">
         <section id="about">
             <h1>👋 I’m HariPriya</h1>
-            <p class="tagline">a passionate Product Manager obsessed with design, user experience, and growth.</p>
+            <p class="tagline">Passionate about bridging the worlds of engineering and product management to craft innovative solutions that truly elevate user experiences. Continuously refining my skills in product strategy, roadmapping, and user research to complement my technical background—driven by curiosity, empathy, and a desire to make a meaningful impact.</p>
         </section>
 
         <section id="case-studies" style="margin-top: 20px;"> <!-- Removed display: none; -->
             <h2>Case Studies</h2>
-            <h3>Short, Skill-Based Courses Platform</h3>
-            <button id="viewPdf" class="btn btn-primary">View Case Study</button>
-            <div id="pdfContainer" class="pdf-container">
-                <iframe src="assets/case-study1.pdf#toolbar=0&navpanes=0&scrollbar=0"></iframe>
-                <button id="closePreview" class="close-preview">X Close Preview</button>
-            </div>
+            <ul class="case-studies-list">
+                <li>
+                    <h3>Short, Skill-Based Courses Platform</h3>
+                    <button id="viewPdf" class="btn btn-primary">View Case Study</button>
+                    <div id="pdfContainer" class="pdf-container">
+                        <iframe src="assets/case-study1.pdf#toolbar=0&navpanes=0&scrollbar=0"></iframe>
+                        <button id="closePreview" class="close-preview">X Close Preview</button>
+                    </div>
+                </li>
+                <!-- Add more case studies here if needed -->
+            </ul>
         </section>
     </main>
 
